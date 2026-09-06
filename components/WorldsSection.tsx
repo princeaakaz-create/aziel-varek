@@ -33,7 +33,7 @@ export default function WorldsSection() {
             return (
               <Link
                 key={genre.id}
-                href={`#books`}
+                href={`/?genre=${genre.id}#books`}
                 className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden p-7"
                 style={{ background: `linear-gradient(160deg, ${from}, ${to})` }}
               >
