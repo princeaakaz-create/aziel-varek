@@ -1,13 +1,22 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { books } from '@/data/books';
+import { genres } from '@/data/genres';
 import GenreFilter, { FilterValue } from './GenreFilter';
 import BookCard from './BookCard';
 
 export default function BookGrid() {
   const [active, setActive] = useState<FilterValue>('all');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const genre = params.get('genre');
+    if (genre && genres.some((g) => g.id === genre)) {
+      setActive(genre as FilterValue);
+    }
+  }, []);
 
   const filtered = useMemo(
     () => (active === 'all' ? books : books.filter((b) => b.genre === active)),
