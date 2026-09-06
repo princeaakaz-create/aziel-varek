@@ -12,9 +12,7 @@ export default function FeaturedBook() {
   const coverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
     let ctx: any;
@@ -65,19 +63,10 @@ export default function FeaturedBook() {
             {book.description}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <Link
-              href={`/books/${book.slug}#excerpt`}
-              className="text-sm font-medium text-ivory transition-colors hover:text-gold"
-            >
+            <Link href={`/books/${book.slug}#excerpt`} className="text-sm font-medium text-ivory transition-colors hover:text-gold">
               Read an excerpt &rarr;
             </Link>
-            
-              <a
-                href={book.amazonUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold"
-            >
+            <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
               Buy on Amazon &rarr;
             </a>
           </div>
