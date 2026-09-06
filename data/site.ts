@@ -1,3 +1,10 @@
+interface JournalPost {
+  title: string;
+  category: string;
+  date: string;
+  excerpt: string;
+}
+
 export const site = {
   name: 'Aziel Varek',
   tagline: 'Stories across worlds.',
@@ -27,5 +34,5 @@ export const site = {
     linkLabel: 'More about me',
     linkHref: '#'
   },
-  journal: []
+  journal: [] as JournalPost[]
 };
