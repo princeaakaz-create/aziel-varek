@@ -33,7 +33,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
 
       <section className="px-6 pb-20 pt-36 md:px-10 md:pt-44">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 md:grid-cols-[minmax(0,340px)_1fr] md:gap-20">
-          <div className="mx-auto w-full max-w-[220px] md:sticky md:top-32 md:mx-0 md:max-w-[240px] md:self-start">
+          <div className="mx-auto w-full max-w-[220px] md:sticky md:top-32 md:mx-0 md:max-w-[220px] md:self-start">
             <BookCover book={book} sizes="240px" />
 
             <div className="mt-8 hidden flex-col gap-4 md:flex">
