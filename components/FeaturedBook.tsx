@@ -72,7 +72,8 @@ export default function FeaturedBook() {
               Read an excerpt &rarr;
             </Link>
             
-              href={book.amazonUrl}
+              <a
+                href={book.amazonUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold"
