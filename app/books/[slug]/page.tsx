@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { books, getBookBySlug } from '@/data/books';
 import { genreLabel } from '@/data/genres';
+import { chapters } from '@/data/chapters';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import BookCover from '@/components/BookCover';
@@ -14,7 +15,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const book = getBookBySlug(params.slug);
   if (!book) return {};
   return {
-    title: `${book.title} — Aziel Varek`,
+    title: `${book.title} \u2014 Aziel Varek`,
     description: book.description
   };
 }
@@ -22,6 +23,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
 export default function BookDetailPage({ params }: { params: { slug: string } }) {
   const book = getBookBySlug(params.slug);
   if (!book) notFound();
+
+  const chapterOne = chapters[book.slug];
+  const readerHref = chapterOne ? '#chapter-one' : '#excerpt';
 
   return (
     <main className="bg-forest">
@@ -33,7 +37,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
             <BookCover book={book} sizes="340px" />
 
             <div className="mt-8 hidden flex-col gap-4 md:flex">
-              <Link href="#excerpt" className="text-sm font-medium text-ivory transition-colors hover:text-gold">
+              <Link href={readerHref} className="text-sm font-medium text-ivory transition-colors hover:text-gold">
                 Read Chapter One &rarr;
               </Link>
               <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
@@ -70,8 +74,29 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
               </blockquote>
             </div>
 
+            {chapterOne && (
+              <div id="chapter-one" className="mt-16 scroll-mt-32">
+                <span className="gold-rule mb-5 block" />
+                <h2 className="font-display text-2xl text-ivory">Chapter One</h2>
+                <div className="mt-6 max-w-prose2 space-y-5">
+                  {chapterOne.map((para, i) => {
+                    const isHeading = i === 0 || para.startsWith('Part ');
+                    return isHeading ? (
+                      <p key={i} className="pt-2 font-display text-lg italic text-turquoise">
+                        {para}
+                      </p>
+                    ) : (
+                      <p key={i} className="text-[15px] leading-relaxed text-ivory/75">
+                        {para}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="mt-14 flex flex-col gap-4 md:hidden">
-              <Link href="#excerpt" className="text-sm font-medium text-ivory transition-colors hover:text-gold">
+              <Link href={readerHref} className="text-sm font-medium text-ivory transition-colors hover:text-gold">
                 Read Chapter One &rarr;
               </Link>
               <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
