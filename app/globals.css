@@ -38,3 +38,38 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(6, 12, 9, 0.55) 100%);
+}
+
+.gold-rule {
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  background: #b6975f;
+}
+
+.botanical-mark {
+  opacity: 0.7;
+}
+
+.reveal-mask {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
