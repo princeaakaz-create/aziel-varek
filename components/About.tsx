@@ -57,7 +57,10 @@ export default function About() {
 
         <div ref={textRef}>
           <span className="gold-rule mb-6 block" />
-          <h2 className="font-display text-3xl font-medium text-ivory md:text-4xl">
+          <p className="font-display text-2xl italic leading-snug text-ivory/90 md:text-3xl">
+            {site.intro.heading}
+          </p>
+          <h2 className="mt-6 font-display text-3xl font-medium text-ivory md:text-4xl">
             {site.about.heading}
           </h2>
           <div className="mt-6 space-y-5">

@@ -1,6 +1,5 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import Intro from '@/components/Intro';
 import About from '@/components/About';
 import WorldsSection from '@/components/WorldsSection';
 import BookGrid from '@/components/BookGrid';
@@ -15,7 +14,6 @@ export default function HomePage() {
     <main>
       <Navbar />
       <Hero />
-      <Intro />
       <About />
       <WorldsSection />
       <BookGrid />
