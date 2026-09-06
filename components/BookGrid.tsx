@@ -39,7 +39,11 @@ export default function BookGrid() {
           <GenreFilter active={active} onChange={setActive} />
         </div>
 
-        <motion.div layout className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          layout
+          className="grid gap-x-10 gap-y-16 justify-center"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 260px))' }}
+        >
           <AnimatePresence mode="popLayout">
             {filtered.map((book) => (
               <BookCard key={book.slug} book={book} />
