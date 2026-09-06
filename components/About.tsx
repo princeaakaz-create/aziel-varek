@@ -10,9 +10,7 @@ export default function About() {
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ctx: any;
 
     (async () => {
@@ -50,16 +48,9 @@ export default function About() {
   }, []);
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="bg-forest py-28 md:py-40"
-    >
+    <section id="about" ref={sectionRef} className="bg-forest py-28 md:py-40">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 md:grid-cols-2 md:gap-20 md:px-10">
-        <div
-          ref={imageRef}
-          className="relative aspect-[4/5] w-full overflow-hidden"
-        >
+        <div ref={imageRef} className="relative aspect-[4/5] w-full overflow-hidden">
           <AtmosphericBackground alt="Portrait of Aziel Varek" atmosphere={false} />
           <div className="absolute inset-0 bg-gradient-to-t from-forest/40 via-transparent to-transparent" />
         </div>
@@ -76,10 +67,7 @@ export default function About() {
               </p>
             ))}
           </div>
-          
-            href={site.about.linkHref}
-            className="mt-8 inline-block text-sm font-medium text-turquoise transition-colors hover:text-gold"
-          >
+          <a href={site.about.linkHref} className="mt-8 inline-block text-sm font-medium text-turquoise transition-colors hover:text-gold">
             {site.about.linkLabel} &rarr;
           </a>
         </div>
