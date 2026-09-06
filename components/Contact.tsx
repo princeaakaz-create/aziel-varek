@@ -19,21 +19,12 @@ export default function Contact() {
         </h2>
 
         <div className="mt-10 flex flex-col items-center gap-4">
-          
-            href={`mailto:${site.email}`}
-            className="font-display text-xl text-ivory transition-colors hover:text-gold"
-          >
+          <a href={`mailto:${site.email}`} className="font-display text-xl text-ivory transition-colors hover:text-gold">
             {site.email}
           </a>
           <div className="flex gap-6">
             {site.social.map((s) => (
-              
-                key={s.label}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[13px] font-medium text-ivory/60 transition-colors hover:text-gold"
-              >
+              <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="text-[13px] font-medium text-ivory/60 transition-colors hover:text-gold">
                 {s.label}
               </a>
             ))}
@@ -48,45 +39,18 @@ export default function Contact() {
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div>
-                <label htmlFor="contact-name" className="sr-only">
-                  Name
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  required
-                  placeholder="Name"
-                  className="w-full border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold"
-                />
+                <label htmlFor="contact-name" className="sr-only">Name</label>
+                <input id="contact-name" type="text" required placeholder="Name" className="w-full border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold" />
               </div>
               <div>
-                <label htmlFor="contact-email" className="sr-only">
-                  Email
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  required
-                  placeholder="Email"
-                  className="w-full border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold"
-                />
+                <label htmlFor="contact-email" className="sr-only">Email</label>
+                <input id="contact-email" type="email" required placeholder="Email" className="w-full border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold" />
               </div>
               <div>
-                <label htmlFor="contact-message" className="sr-only">
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  required
-                  rows={4}
-                  placeholder="Message"
-                  className="w-full resize-none border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold"
-                />
+                <label htmlFor="contact-message" className="sr-only">Message</label>
+                <textarea id="contact-message" required rows={4} placeholder="Message" className="w-full resize-none border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold" />
               </div>
-              <button
-                type="submit"
-                className="self-center text-sm font-medium text-ivory underline decoration-gold/60 decoration-1 underline-offset-8 transition-colors hover:text-gold"
-              >
+              <button type="submit" className="self-center text-sm font-medium text-ivory underline decoration-gold/60 decoration-1 underline-offset-8 transition-colors hover:text-gold">
                 Send message
               </button>
             </form>
