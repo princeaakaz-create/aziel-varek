@@ -19,11 +19,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function BookDetailPage({
-  params
-}: {
-  params: { slug: string };
-}) {
+export default function BookDetailPage({ params }: { params: { slug: string } }) {
   const book = getBookBySlug(params.slug);
   if (!book) notFound();
 
@@ -37,18 +33,10 @@ export default function BookDetailPage({
             <BookCover book={book} sizes="340px" />
 
             <div className="mt-8 hidden flex-col gap-4 md:flex">
-              <Link
-                href="#excerpt"
-                className="text-sm font-medium text-ivory transition-colors hover:text-gold"
-              >
+              <Link href="#excerpt" className="text-sm font-medium text-ivory transition-colors hover:text-gold">
                 Read Chapter One &rarr;
               </Link>
-              
-                href={book.amazonUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold"
-              >
+              <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
                 Buy on Amazon &rarr;
               </a>
             </div>
@@ -83,27 +71,16 @@ export default function BookDetailPage({
             </div>
 
             <div className="mt-14 flex flex-col gap-4 md:hidden">
-              <Link
-                href="#excerpt"
-                className="text-sm font-medium text-ivory transition-colors hover:text-gold"
-              >
+              <Link href="#excerpt" className="text-sm font-medium text-ivory transition-colors hover:text-gold">
                 Read Chapter One &rarr;
               </Link>
-              
-                href={book.amazonUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold"
-              >
+              <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
                 Buy on Amazon &rarr;
               </a>
             </div>
 
             <div className="mt-20">
-              <Link
-                href="/#books"
-                className="text-sm font-medium text-ivory/50 transition-colors hover:text-gold"
-              >
+              <Link href="/#books" className="text-sm font-medium text-ivory/50 transition-colors hover:text-gold">
                 &larr; Back to all books
               </Link>
             </div>
