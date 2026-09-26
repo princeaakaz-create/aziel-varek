@@ -46,9 +46,9 @@ export default function FeaturedBook() {
   return (
     <section ref={sectionRef} className="bg-teal py-28 md:py-40">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 md:grid-cols-[220px_1fr] md:gap-20 md:px-10">
-        <div className="mx-auto w-full max-w-[220px] overflow-hidden">
+        <div className="mx-auto w-full max-w-[160px] overflow-hidden">
           <div ref={coverRef}>
-            <BookCover book={book} sizes="220px" />
+            <BookCover book={book} sizes="160px" />
           </div>
         </div>
 

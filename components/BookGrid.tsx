@@ -42,7 +42,7 @@ export default function BookGrid() {
         <motion.div
           layout
           className="grid gap-x-10 gap-y-16 justify-center"
-          style={{ gridTemplateColumns: 'repeat(auto-fill, 220px)' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fill, 160px)' }}
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((book) => (

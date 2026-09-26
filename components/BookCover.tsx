@@ -12,7 +12,7 @@ const TONES: Record<string, [string, string]> = {
 
 export default function BookCover({
   book,
-  sizes = '300px'
+  sizes = '160px'
 }: {
   book: Book;
   sizes?: string;
@@ -20,21 +20,21 @@ export default function BookCover({
   const [from, to] = TONES[book.genre] ?? TONES.other;
 
   return (
-    <div className="relative aspect-[2/3] w-full overflow-hidden">
+    <div
+      className="relative aspect-[2/3] w-full overflow-hidden"
+      style={{ background: `linear-gradient(155deg, ${from} 0%, ${to} 100%)` }}
+    >
       {book.cover ? (
         <Image
           src={book.cover}
           alt={`Cover of ${book.title}`}
           fill
           sizes={sizes}
-          className="object-cover"
+          className="object-contain"
         />
       ) : (
         <div
           className="flex h-full w-full flex-col items-center justify-center px-6 text-center"
-          style={{
-            background: `linear-gradient(155deg, ${from} 0%, ${to} 100%)`
-          }}
           role="img"
           aria-label={`Cover of ${book.title}`}
         >
