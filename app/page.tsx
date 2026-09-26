@@ -1,6 +1,5 @@
 import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
+import HeroAbout from '@/components/HeroAbout';
 import WorldsSection from '@/components/WorldsSection';
 import BookGrid from '@/components/BookGrid';
 import FeaturedBook from '@/components/FeaturedBook';
@@ -13,8 +12,7 @@ export default function HomePage() {
   return (
     <main>
       <Navbar />
-      <Hero />
-      <About />
+      <HeroAbout />
       <WorldsSection />
       <BookGrid />
       <FeaturedBook />
