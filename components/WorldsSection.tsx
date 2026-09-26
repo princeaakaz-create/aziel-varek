@@ -12,6 +12,62 @@ const TONES: Record<string, [string, string]> = {
   other: ['#242923', '#0f120e']
 };
 
+function Plaque({ id, from, to }: { id: string; from: string; to: string }) {
+  return (
+    <svg
+      className="absolute inset-0 h-full w-full"
+      viewBox="0 0 200 260"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={`grad-${id}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor={from} />
+          <stop offset="100%" stopColor={to} />
+        </linearGradient>
+      </defs>
+
+      {/* outer plaque body with arched top */}
+      <path
+        d="M8,46 Q8,10 100,10 Q192,10 192,46 L192,252 L8,252 Z"
+        fill={`url(#grad-${id})`}
+        stroke="#b6975f"
+        strokeWidth="1.1"
+      />
+
+      {/* inner carved border line */}
+      <path
+        d="M17,48 Q17,20 100,20 Q183,20 183,48 L183,243 L17,243 Z"
+        fill="none"
+        stroke="#b6975f"
+        strokeOpacity="0.55"
+        strokeWidth="0.6"
+      />
+
+      {/* corner flourishes */}
+      {[
+        [21, 47],
+        [179, 47],
+        [21, 239],
+        [179, 239]
+      ].map(([cx, cy], i) => (
+        <g key={i} transform={`translate(${cx} ${cy})`} opacity="0.75">
+          <path d="M0,-5 L1.4,-1.4 L5,0 L1.4,1.4 L0,5 L-1.4,1.4 L-5,0 L-1.4,-1.4 Z" fill="#b6975f" />
+        </g>
+      ))}
+
+      {/* small apex ornament at the top of the arch */}
+      <path
+        d="M92,15 L100,7 L108,15"
+        fill="none"
+        stroke="#b6975f"
+        strokeWidth="0.8"
+        strokeOpacity="0.8"
+      />
+    </svg>
+  );
+}
+
 export default function WorldsSection() {
   return (
     <section id="worlds" className="bg-forest py-28 md:py-36">
@@ -27,28 +83,25 @@ export default function WorldsSection() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
           {genres.map((genre) => {
             const [from, to] = TONES[genre.id] ?? TONES.other;
             return (
               <Link
                 key={genre.id}
                 href={`/?genre=${genre.id}#books`}
-                className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden p-7"
-                style={{ background: `linear-gradient(160deg, ${from}, ${to})` }}
+                className="group relative mx-auto block aspect-[200/260] w-full max-w-[180px] transition-transform duration-500 ease-editorial hover:-translate-y-1"
               >
-                <div className="absolute inset-0 origin-center scale-100 transition-transform duration-700 ease-editorial group-hover:scale-110">
-                  <div className="grain absolute inset-0 opacity-60" />
+                <Plaque id={genre.id} from={from} to={to} />
+                <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center">
+                  <h3 className="font-display text-lg leading-snug text-ivory transition-colors duration-300 group-hover:text-gold md:text-xl">
+                    {genre.label}
+                  </h3>
+                  <span className="mt-3 block h-px w-6 bg-gold/70" />
+                  <p className="mt-3 text-[11px] leading-relaxed text-ivory/55">
+                    {genre.description}
+                  </p>
                 </div>
-                <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-black/0" />
-
-                <span className="relative z-10 mb-3 block h-px w-0 bg-gold transition-all duration-500 ease-editorial group-hover:w-10" />
-                <h3 className="relative z-10 translate-y-0 font-display text-2xl text-ivory transition-transform duration-500 ease-editorial group-hover:-translate-y-1">
-                  {genre.label}
-                </h3>
-                <p className="relative z-10 mt-2 max-w-[26ch] text-[13px] text-ivory/60">
-                  {genre.description}
-                </p>
               </Link>
             );
           })}
