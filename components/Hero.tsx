@@ -53,10 +53,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex h-[100svh] w-full items-end overflow-hidden bg-forest"
+      className="relative z-10 flex h-[100svh] w-full items-end overflow-hidden"
     >
       <div ref={imageWrapRef} className="absolute inset-0">
-        <AtmosphericBackground priority alt="An ancient, atmospheric woodland at dawn" />
       </div>
 
       <div className="relative z-10 flex w-full flex-col items-center px-6 pb-24 text-center md:pb-28">
