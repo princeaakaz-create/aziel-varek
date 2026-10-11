@@ -6,6 +6,7 @@ import { books } from '@/data/books';
 import { genres } from '@/data/genres';
 import GenreFilter, { FilterValue } from './GenreFilter';
 import BookCard from './BookCard';
+import SectionHeading from './SectionHeading';
 
 export default function BookGrid() {
   const [active, setActive] = useState<FilterValue>('all');
@@ -24,25 +25,22 @@ export default function BookGrid() {
   );
 
   return (
-    <section id="books" className="bg-forest py-28 md:py-36">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-4xl font-medium text-ivory md:text-5xl">
-            Books
-          </h2>
-          <p className="mt-4 text-[15px] text-ivory/60">
-            Stories in different worlds, genres and places.
-          </p>
-        </div>
+    <section id="books" className="relative py-28 md:py-40">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
+        <SectionHeading
+          eyebrow="The Library"
+          title="Books"
+          sub="Stories in different worlds, genres and places."
+        />
 
-        <div className="mt-12 mb-14">
+        <div className="mb-16 mt-12">
           <GenreFilter active={active} onChange={setActive} />
         </div>
 
         <motion.div
           layout
-          className="grid gap-x-10 gap-y-16 justify-center"
-          style={{ gridTemplateColumns: 'repeat(auto-fill, 160px)' }}
+          className="grid justify-center gap-x-10 gap-y-14"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 280px))' }}
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((book) => (
@@ -50,6 +48,12 @@ export default function BookGrid() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {filtered.length === 0 && (
+          <p className="mt-6 text-center text-xl italic text-ivory/80 text-glow">
+            No tales on this shelf yet.
+          </p>
+        )}
       </div>
     </section>
   );

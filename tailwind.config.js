@@ -25,12 +25,18 @@ module.exports = {
           muted: '#4d7d75'
         },
         gold: {
-          DEFAULT: '#b6975f',
-          dim: '#8c7649'
+          DEFAULT: '#d4b06a',
+          dim: '#9a7f4a',
+          bright: '#f3dca0'
+        },
+        wood: {
+          DEFAULT: '#3b2616',
+          dark: '#1c110a'
         }
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],
+        deco: ['var(--font-deco)', 'var(--font-display)', 'Georgia', 'serif'],
         body: ['var(--font-body)', 'Helvetica', 'Arial', 'sans-serif']
       },
       letterSpacing: {

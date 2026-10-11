@@ -1,20 +1,27 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Manrope } from 'next/font/google';
+import { Cinzel, Cinzel_Decorative, EB_Garamond } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 import AmbientBackground from '@/components/AmbientBackground';
 
-const display = Cormorant_Garamond({
+const display = Cinzel({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-display',
   display: 'swap'
 });
 
-const body = Manrope({
+const deco = Cinzel_Decorative({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-deco',
+  display: 'swap'
+});
+
+const body = EB_Garamond({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
   variable: '--font-body',
   display: 'swap'
 });
@@ -22,7 +29,7 @@ const body = Manrope({
 export const metadata: Metadata = {
   title: 'Aziel Varek — Author',
   description:
-    'Aziel Varek writes stories that move between fantasy, science fiction, and literary realism. Stories across worlds.'
+    'Aziel Varek writes stories that move between science fiction, fantasy, and fairytale. Stories across worlds.'
 };
 
 export default function RootLayout({
@@ -31,10 +38,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
-       <body>
+    <html lang="en" className={`${display.variable} ${deco.variable} ${body.variable}`}>
+      <body>
         <AmbientBackground />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <div className="relative z-10">
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </div>
       </body>
     </html>
   );

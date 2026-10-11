@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getFeaturedBook } from '@/data/books';
 import { genreLabel } from '@/data/genres';
 import BookCover from './BookCover';
+import Ornament from './Ornament';
 
 export default function FeaturedBook() {
   const book = getFeaturedBook();
@@ -44,31 +45,36 @@ export default function FeaturedBook() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-teal py-28 md:py-40">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 md:grid-cols-[220px_1fr] md:gap-20 md:px-10">
-        <div className="mx-auto w-full max-w-[160px] overflow-hidden">
-          <div ref={coverRef}>
-            <BookCover book={book} sizes="160px" />
-          </div>
-        </div>
+    <section ref={sectionRef} className="relative py-28 md:py-44">
+      <div className="mx-auto max-w-5xl px-6 md:px-10">
+        <div className="plaque plaque-card px-6 py-12 md:px-14 md:py-16">
+          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-[200px_1fr] md:gap-14">
+            <div className="mx-auto w-full max-w-[180px]">
+              <div ref={coverRef} className="float-slow shadow-[0_20px_44px_rgba(0,0,0,0.7)] ring-1 ring-gold/60">
+                <BookCover book={book} sizes="180px" />
+              </div>
+            </div>
 
-        <div>
-          <p className="text-[11px] uppercase tracking-widest2 text-turquoise">
-            {genreLabel(book.genre)}
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-medium text-ivory md:text-4xl">
-            {book.title}
-          </h2>
-          <p className="mt-6 max-w-prose2 text-[15px] leading-relaxed text-ivory/70">
-            {book.description}
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <Link href={`/books/${book.slug}#excerpt`} className="text-sm font-medium text-ivory transition-colors hover:text-gold">
-              Read an excerpt &rarr;
-            </Link>
-            <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-ivory/60 transition-colors hover:text-gold">
-              Buy on Amazon &rarr;
-            </a>
+            <div className="text-center md:text-left">
+              <p className="font-display text-[12px] uppercase tracking-[0.4em] text-turquoise">
+                Featured &middot; {genreLabel(book.genre)}
+              </p>
+              <h2 className="gold-text mt-4 font-deco text-3xl font-bold leading-snug md:text-5xl">
+                {book.title}
+              </h2>
+              <Ornament className="!mx-0 mt-5" />
+              <p className="mt-6 max-w-prose2 text-[19px] italic leading-relaxed text-ivory/90">
+                {book.description}
+              </p>
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-5 md:justify-start">
+                <Link href={`/books/${book.slug}#excerpt`} className="plaque-btn">
+                  Read an excerpt
+                </Link>
+                <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="plaque-btn alt">
+                  Buy on Amazon
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

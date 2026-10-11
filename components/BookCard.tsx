@@ -16,24 +16,25 @@ export default function BookCard({ book }: { book: Book }) {
       transition={{ duration: 0.55, ease: [0.6, 0.05, 0.15, 1] }}
       className="group"
     >
-      <Link href={`/books/${book.slug}`} className="block">
-        <div className="overflow-hidden">
-          <div className="transition-transform duration-700 ease-editorial group-hover:scale-[1.03]">
-            <BookCover book={book} />
-          </div>
+      <Link
+        href={`/books/${book.slug}`}
+        className="plaque plaque-card block px-6 pb-8 pt-8 text-center transition-transform duration-500 ease-editorial group-hover:-translate-y-2"
+      >
+        <div className="mx-auto w-[150px] shadow-[0_14px_30px_rgba(0,0,0,0.6)] ring-1 ring-gold/50">
+          <BookCover book={book} sizes="150px" />
         </div>
-        <div className="mt-5">
-          <p className="text-[11px] uppercase tracking-widest2 text-turquoise">
-            {genreLabel(book.genre)}
-          </p>
-          <h3 className="mt-2 font-display text-xl text-ivory">{book.title}</h3>
-          <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-ivory/60">
-            {book.description}
-          </p>
-          <span className="mt-3 inline-block text-[13px] font-medium text-ivory/80 transition-colors group-hover:text-gold">
-            Explore &rarr;
-          </span>
-        </div>
+        <p className="mt-6 font-display text-[11px] uppercase tracking-[0.3em] text-turquoise">
+          {genreLabel(book.genre)}
+        </p>
+        <h3 className="gold-text mt-3 font-deco text-xl font-bold leading-snug">
+          {book.title}
+        </h3>
+        <p className="mt-3 line-clamp-3 text-[16px] italic leading-relaxed text-ivory/80">
+          {book.description}
+        </p>
+        <span className="mt-5 inline-block font-display text-[11px] uppercase tracking-[0.3em] text-gold-bright/85">
+          Explore &rarr;
+        </span>
       </Link>
     </motion.div>
   );

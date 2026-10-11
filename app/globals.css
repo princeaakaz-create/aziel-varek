@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Manrope', Helvetica, Arial, sans-serif;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -16,53 +11,198 @@ html {
 }
 
 body {
-  background-color: #0d1712;
+  background-color: #0a120f;
   color: #f2ede0;
-  font-family: var(--font-body);
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 18px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: #b6975f;
+  background: #d4b06a;
   color: #0d1712;
 }
 
 :focus-visible {
-  outline: 1.5px solid #b6975f;
+  outline: 1.5px solid #f3dca0;
   outline-offset: 4px;
 }
 
-.grain::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+/* ---------- gold-leaf lettering ---------- */
+.gold-text {
+  background: linear-gradient(180deg, #fff2c4 0%, #e6c57e 45%, #b48a45 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
 }
 
-.vignette::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 45%, rgba(6, 12, 9, 0.55) 100%);
+.text-glow {
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 28px rgba(212, 176, 106, 0.18);
 }
 
 .gold-rule {
   display: inline-block;
   width: 44px;
   height: 1px;
-  background: #b6975f;
+  background: #d4b06a;
 }
 
-.botanical-mark {
-  opacity: 0.7;
+/* ---------- dark glass panels (content floats over the scenery) ---------- */
+.glass {
+  background: linear-gradient(160deg, rgba(10, 20, 16, 0.62), rgba(8, 14, 12, 0.5));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 176, 106, 0.28);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 238, 190, 0.08);
+}
+
+/* ---------- wooden plaque base ---------- */
+.plaque,
+.plaque-btn {
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(255, 220, 160, 0.06) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.62) 100%),
+    url('/images/wood.jpg');
+  background-size: cover, 420px 420px;
+  border: 1px solid #c9a566;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 160, 0.35),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.65),
+    inset 0 0 0 4px rgba(20, 12, 6, 0.55),
+    0 10px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* carved inner gold line */
+.plaque::before,
+.plaque-btn::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(232, 200, 130, 0.55);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* brass nails, top-left + bottom-right pair */
+.plaque::after,
+.plaque-btn::after {
+  content: '';
+  position: absolute;
+  inset: 11px;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 0 0, #f3dca0 0 1.6px, #8a6a30 2.4px, transparent 3px),
+    radial-gradient(circle at 100% 0, #f3dca0 0 1.6px, #8a6a30 2.4px, transparent 3px),
+    radial-gradient(circle at 0 100%, #f3dca0 0 1.6px, #8a6a30 2.4px, transparent 3px),
+    radial-gradient(circle at 100% 100%, #f3dca0 0 1.6px, #8a6a30 2.4px, transparent 3px);
+  background-repeat: no-repeat;
+}
+
+.plaque-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2.4rem;
+  border-radius: 6px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f6e3b0;
+  text-shadow: 0 1px 0 #000, 0 0 12px rgba(243, 220, 160, 0.35);
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(0.6, 0.05, 0.15, 1), filter 0.4s, box-shadow 0.4s, color 0.3s;
+}
+
+.plaque-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.25) saturate(1.1);
+  color: #fff6d8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 160, 0.5),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 4px rgba(20, 12, 6, 0.5),
+    0 16px 34px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(212, 176, 106, 0.28);
+}
+
+.plaque-btn:active {
+  transform: translateY(0);
+}
+
+.plaque-btn.alt {
+  background-image:
+    linear-gradient(180deg, rgba(10, 20, 16, 0.55), rgba(8, 14, 12, 0.8)),
+    url('/images/wood.jpg');
+  color: #e8dfc8;
+}
+
+/* tab-style small plaque (genre filter) */
+.plaque-tab {
+  padding: 0.6rem 1.5rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+}
+
+.plaque-tab[aria-selected='false'] {
+  filter: brightness(0.6) saturate(0.8);
+}
+
+.plaque-tab[aria-selected='true'] {
+  color: #fff6d8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 160, 0.5),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.6),
+    0 0 26px rgba(212, 176, 106, 0.35),
+    0 8px 22px rgba(0, 0, 0, 0.55);
+}
+
+/* arched wooden door-plaque card */
+.plaque-arch {
+  border-radius: 140px 140px 10px 10px;
+}
+
+.plaque-card {
+  border-radius: 10px;
+}
+
+/* inputs on a dark carved base */
+.field {
+  width: 100%;
+  background: rgba(8, 14, 11, 0.55);
+  border: 1px solid rgba(212, 176, 106, 0.35);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  color: #f2ede0;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.field::placeholder {
+  color: rgba(242, 237, 224, 0.4);
+}
+.field:focus {
+  outline: none;
+  border-color: #f3dca0;
+  box-shadow: 0 0 0 3px rgba(212, 176, 106, 0.2);
 }
 
 .reveal-mask {
   overflow: hidden;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-slow {
+  animation: floatY 7s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

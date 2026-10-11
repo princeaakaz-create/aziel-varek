@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Ornament from './Ornament';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
@@ -13,45 +14,45 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="bg-forest py-28 md:py-36">
-      <div className="mx-auto max-w-xl px-6 text-center md:px-10">
-        <h2 className="font-display text-3xl font-medium text-ivory md:text-4xl">
-          Letters from the author
-        </h2>
-        <p className="mx-auto mt-4 max-w-prose2 text-[14px] leading-relaxed text-ivory/60">
-          Occasional notes about new books and the writing behind them.
-          Nothing more frequent than that.
-        </p>
-
-        {status === 'submitted' ? (
-          <p className="mt-8 text-sm text-turquoise">
-            You&rsquo;re on the list. Thank you.
+    <section className="relative py-24 md:py-32">
+      <div className="mx-auto max-w-2xl px-6 md:px-10">
+        <div className="glass px-8 py-12 text-center md:px-14">
+          <h2 className="gold-text font-deco text-3xl font-bold leading-snug md:text-4xl">
+            Letters from the author
+          </h2>
+          <Ornament className="mt-5" />
+          <p className="mx-auto mt-5 max-w-prose2 text-[19px] italic leading-relaxed text-ivory/85">
+            Occasional notes about new books and the writing behind them.
+            Nothing more frequent than that.
           </p>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="mx-auto mt-8 flex max-w-sm flex-col items-center gap-4 sm:flex-row"
-          >
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="w-full border-b border-ivory/25 bg-transparent px-1 py-2 text-sm text-ivory placeholder:text-ivory/35 focus:border-gold"
-            />
-            <button
-              type="submit"
-              className="whitespace-nowrap text-sm font-medium text-ivory underline decoration-gold/60 decoration-1 underline-offset-8 transition-colors hover:text-gold"
+
+          {status === 'submitted' ? (
+            <p className="mt-8 text-xl italic text-gold-bright">
+              You&rsquo;re on the list. Thank you.
+            </p>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="mx-auto mt-9 flex max-w-md flex-col items-stretch gap-5"
             >
-              Subscribe
-            </button>
-          </form>
-        )}
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="field text-center"
+              />
+              <button type="submit" className="plaque-btn self-center">
+                Subscribe
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </section>
   );

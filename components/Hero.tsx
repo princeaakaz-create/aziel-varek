@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { site } from '@/data/site';
-import AtmosphericBackground from './AtmosphericBackground';
 
 export default function Hero() {
   const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -55,13 +54,15 @@ export default function Hero() {
       id="hero"
       className="relative z-10 flex h-[100svh] w-full items-end overflow-hidden"
     >
-      <div ref={imageWrapRef} className="absolute inset-0">
-      </div>
+      <div
+        ref={imageWrapRef}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+      />
 
       <div className="relative z-10 flex w-full flex-col items-center px-6 pb-24 text-center md:pb-28">
         <p
           ref={roleRef}
-          className="mb-4 text-[13px] font-medium tracking-widest2 text-turquoise"
+          className="mb-5 font-display text-[13px] font-medium uppercase tracking-[0.5em] text-gold-bright text-glow"
         >
           Author
         </p>
@@ -69,7 +70,7 @@ export default function Hero() {
         <div className="reveal-mask">
           <h1
             ref={nameRef}
-            className="font-display text-[15vw] font-medium leading-[0.95] text-ivory md:text-[7.5rem]"
+            className="gold-text px-2 pb-2 font-deco text-[11vw] font-black leading-[1.05] md:text-[6.5rem]"
           >
             {site.name}
           </h1>
@@ -77,19 +78,23 @@ export default function Hero() {
 
         <p
           ref={taglineRef}
-          className="mt-6 font-display text-xl italic text-ivory/80 md:text-2xl"
+          className="mt-6 text-2xl italic text-ivory text-glow md:text-3xl"
         >
           {site.tagline}
         </p>
+
+        <a href="#about" className="plaque-btn mt-10">
+          Enter the Stories
+        </a>
       </div>
 
       <div
         ref={indicatorRef}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 opacity-0"
+        className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 opacity-0"
         aria-hidden="true"
       >
         <div className="h-10 w-px overflow-hidden bg-ivory/25">
-          <div className="h-full w-full animate-[scrollLine_2.2s_ease-in-out_infinite] bg-gold" />
+          <div className="h-full w-full animate-[scrollLine_2.2s_ease-in-out_infinite] bg-gold-bright" />
         </div>
       </div>
 

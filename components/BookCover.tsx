@@ -3,11 +3,7 @@ import { Book } from '@/data/books';
 
 const TONES: Record<string, [string, string]> = {
   fantasy: ['#16352c', '#0b1a15'],
-  'science-fiction': ['#12313a', '#0a1a1e'],
-  romance: ['#2a2018', '#140f0a'],
-  mystery: ['#1c2420', '#0c1210'],
-  adventure: ['#2c2a16', '#14120a'],
-  other: ['#1f231f', '#0e110e']
+  'science-fiction': ['#12313a', '#0a1a1e']
 };
 
 export default function BookCover({
@@ -17,7 +13,7 @@ export default function BookCover({
   book: Book;
   sizes?: string;
 }) {
-  const [from, to] = TONES[book.genre] ?? TONES.other;
+  const [from, to] = TONES[book.genre] ?? TONES.fantasy;
 
   return (
     <div
