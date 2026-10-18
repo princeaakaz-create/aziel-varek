@@ -1,28 +1,21 @@
 import type { Metadata } from 'next';
-import { Cinzel, Cinzel_Decorative, EB_Garamond } from 'next/font/google';
+import { Cormorant_Garamond, Montserrat } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 import AmbientBackground from '@/components/AmbientBackground';
 
-const display = Cinzel({
+const display = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap'
 });
 
-const deco = Cinzel_Decorative({
+const label = Montserrat({
   subsets: ['latin'],
-  weight: ['400', '700', '900'],
-  variable: '--font-deco',
-  display: 'swap'
-});
-
-const body = EB_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-body',
+  weight: ['400', '500'],
+  variable: '--font-label',
   display: 'swap'
 });
 
@@ -38,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${deco.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${label.variable}`}>
       <body>
         <AmbientBackground />
         <div className="relative z-10">

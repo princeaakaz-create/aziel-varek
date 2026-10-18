@@ -56,13 +56,20 @@ export default function Hero() {
     >
       <div
         ref={imageWrapRef}
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+        style={{ opacity: "calc(1 - var(--hero-p, 0))" }}
       />
 
-      <div className="relative z-10 flex w-full flex-col items-center px-6 pb-24 text-center md:pb-28">
+      <div
+        className="relative z-10 flex w-full flex-col items-center px-6 pb-24 text-center md:pb-28"
+        style={{
+          opacity: 'calc(1 - var(--hero-p, 0))',
+          transform: 'translateY(calc(var(--hero-p, 0) * -36px))'
+        }}
+      >
         <p
           ref={roleRef}
-          className="mb-5 font-display text-[13px] font-medium uppercase tracking-[0.5em] text-gold-bright text-glow"
+          className="label mb-5 text-glow"
         >
           Author
         </p>
@@ -70,7 +77,7 @@ export default function Hero() {
         <div className="reveal-mask">
           <h1
             ref={nameRef}
-            className="gold-text px-2 pb-2 font-deco text-[11vw] font-black leading-[1.05] md:text-[6.5rem]"
+            className="heading px-2 pb-2 text-[10vw] font-light uppercase leading-[1.05] tracking-[0.08em] md:text-[5.5rem]"
           >
             {site.name}
           </h1>
@@ -78,13 +85,13 @@ export default function Hero() {
 
         <p
           ref={taglineRef}
-          className="mt-6 text-2xl italic text-ivory text-glow md:text-3xl"
+          className="mt-5 text-2xl italic text-ivory/90 text-glow md:text-3xl"
         >
           {site.tagline}
         </p>
 
-        <a href="#about" className="plaque-btn mt-10">
-          Enter the Stories
+        <a href="#worlds" className="btn mt-9">
+          Explore Worlds
         </a>
       </div>
 
@@ -94,7 +101,7 @@ export default function Hero() {
         aria-hidden="true"
       >
         <div className="h-10 w-px overflow-hidden bg-ivory/25">
-          <div className="h-full w-full animate-[scrollLine_2.2s_ease-in-out_infinite] bg-gold-bright" />
+          <div className="h-full w-full animate-[scrollLine_2.2s_ease-in-out_infinite] bg-gold" />
         </div>
       </div>
 

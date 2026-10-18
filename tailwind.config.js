@@ -8,36 +8,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        forest: {
-          DEFAULT: '#0d1712',
-          light: '#122019'
-        },
-        teal: {
-          DEFAULT: '#12262a',
-          light: '#1a3339'
-        },
-        ivory: {
-          DEFAULT: '#f2ede0',
-          dim: '#d9d3c3'
-        },
-        turquoise: {
-          DEFAULT: '#6fa79c',
-          muted: '#4d7d75'
-        },
-        gold: {
-          DEFAULT: '#d4b06a',
-          dim: '#9a7f4a',
-          bright: '#f3dca0'
-        },
-        wood: {
-          DEFAULT: '#3b2616',
-          dark: '#1c110a'
-        }
+        forest: { DEFAULT: '#0D1F1A', light: '#13291f' },
+        moss: '#2E4A3A',
+        sage: '#6B7F6B',
+        teal: { DEFAULT: '#0D1F1A', light: '#13291f' },
+        ivory: { DEFAULT: '#E8E1D3', dim: '#cfc8b8' },
+        turquoise: { DEFAULT: '#9DB39D', muted: '#6B7F6B' },
+        gold: { DEFAULT: '#B89A62', dim: '#8c7649', bright: '#D6BC86' },
+        charcoal: '#0A100E'
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],
-        deco: ['var(--font-deco)', 'var(--font-display)', 'Georgia', 'serif'],
-        body: ['var(--font-body)', 'Helvetica', 'Arial', 'sans-serif']
+        deco: ['var(--font-display)', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'Georgia', 'serif'],
+        label: ['var(--font-label)', 'Helvetica', 'Arial', 'sans-serif']
       },
       letterSpacing: {
         widest2: '0.28em'

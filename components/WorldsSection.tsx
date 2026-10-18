@@ -1,46 +1,113 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { genres } from '@/data/genres';
 import SectionHeading from './SectionHeading';
-import GenreIcon from './GenreIcon';
+
+// Which part of the artwork each doorway looks into
+const ART: Record<string, { img: string; pos: string }> = {
+  'science-fiction': { img: '/images/scenes/scene-bridge.jpg', pos: '62% 40%' },
+  fantasy: { img: '/images/scenes/scene-archway.jpg', pos: '52% 38%' }
+};
 
 export default function WorldsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Doorways rise in with the scroll, staggered, and reverse when you scroll back up
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    let ctx: any;
+    (async () => {
+      const { default: gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        gsap.utils.toArray<HTMLElement>('[data-door]').forEach((el, i) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: el,
+                start: `top ${95 - i * 6}%`,
+                end: `top ${60 - i * 6}%`,
+                scrub: true
+              }
+            }
+          );
+        });
+      }, sectionRef);
+    })();
+    return () => ctx && ctx.revert();
+  }, []);
+
   return (
-    <section id="worlds" className="relative py-28 md:py-40">
+    <section id="worlds" ref={sectionRef} className="relative py-28 md:py-40">
       <div className="mx-auto max-w-5xl px-6 md:px-10">
         <SectionHeading
-          eyebrow="Choose a door"
-          title="Worlds"
-          sub="My writing moves between worlds rather than staying inside one. Each genre is its own room in the same house."
+          eyebrow="Step into a new genre"
+          title="Explore the Worlds"
+          sub="Each genre is its own doorway in the same house. Choose one and find your next story."
         />
 
         <div className="mt-20 grid grid-cols-1 justify-items-center gap-14 sm:grid-cols-2 md:gap-20">
-          {genres.map((genre) => (
-            <Link
-              key={genre.id}
-              href={`/?genre=${genre.id}#books`}
-              className="group block w-full max-w-[320px] transition-transform duration-500 ease-editorial hover:-translate-y-2"
-            >
-              <div className="plaque plaque-arch px-8 pb-12 pt-16 text-center">
-                <div className="float-slow mx-auto flex justify-center drop-shadow-[0_0_14px_rgba(243,220,160,0.45)]">
-                  <GenreIcon id={genre.id} />
+          {genres.map((genre) => {
+            const art = ART[genre.id] ?? ART.fantasy;
+            return (
+              <Link
+                key={genre.id}
+                data-door
+                href={`/?genre=${genre.id}#books`}
+                className="door group relative block w-full max-w-[300px]"
+                aria-label={`${genre.label}: open this world`}
+              >
+                <div className="door-frame relative aspect-[3/4.4] w-full overflow-hidden">
+                  <div
+                    className="door-img absolute inset-0 bg-cover"
+                    style={{ backgroundImage: `url('${art.img}')`, backgroundPosition: art.pos }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-charcoal/10" />
+                  <div className="absolute inset-x-0 bottom-0 px-5 pb-8 text-center">
+                    <h3 className="heading text-2xl uppercase tracking-[0.12em]">{genre.label}</h3>
+                    <span className="mx-auto mt-3 block h-px w-10 bg-gold/70 transition-all duration-500 group-hover:w-20" />
+                    <p className="mt-3 text-[18px] italic leading-snug text-ivory/85">
+                      {genre.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="gold-text mt-6 font-deco text-2xl font-bold leading-snug">
-                  {genre.label}
-                </h3>
-                <span className="mx-auto mt-4 block h-px w-14 bg-gold/70" />
-                <p className="mt-4 text-[17px] italic leading-relaxed text-ivory/85">
-                  {genre.description}
-                </p>
-                <span className="mt-6 inline-block font-display text-[11px] uppercase tracking-[0.3em] text-gold-bright/80 transition-colors group-hover:text-gold-bright">
-                  Open the door &rarr;
-                </span>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
+
+      <style jsx>{`
+        .door-frame {
+          border: 1px solid rgba(184, 154, 98, 0.55);
+          border-radius: 999px 999px 2px 2px / 160px 160px 2px 2px;
+          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+          transition: border-color 0.5s, box-shadow 0.5s, transform 0.6s cubic-bezier(0.6, 0.05, 0.15, 1);
+        }
+        .door-img {
+          transform: scale(1.12);
+          filter: saturate(0.9) brightness(0.85);
+          transition: transform 1.2s cubic-bezier(0.6, 0.05, 0.15, 1), filter 0.8s;
+        }
+        .door:hover .door-frame {
+          border-color: #d6bc86;
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(184, 154, 98, 0.18);
+          transform: translateY(-6px);
+        }
+        .door:hover .door-img {
+          transform: scale(1.22);
+          filter: saturate(1.05) brightness(1);
+        }
+      `}</style>
     </section>
   );
 }

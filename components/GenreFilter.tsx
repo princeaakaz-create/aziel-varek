@@ -20,7 +20,7 @@ export default function GenreFilter({
     <div
       role="tablist"
       aria-label="Filter books by genre"
-      className="flex flex-wrap justify-center gap-4"
+      className="flex flex-wrap justify-center gap-3"
     >
       {options.map((opt) => (
         <button
@@ -28,7 +28,7 @@ export default function GenreFilter({
           role="tab"
           aria-selected={active === opt.id}
           onClick={() => onChange(opt.id)}
-          className="plaque-btn plaque-tab"
+          className="btn tab"
         >
           {opt.label}
         </button>

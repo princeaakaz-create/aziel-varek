@@ -10,31 +10,19 @@ export default function BookCard({ book }: { book: Book }) {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -16 }}
-      transition={{ duration: 0.55, ease: [0.6, 0.05, 0.15, 1] }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.5, ease: [0.6, 0.05, 0.15, 1] }}
       className="group"
     >
-      <Link
-        href={`/books/${book.slug}`}
-        className="plaque plaque-card block px-6 pb-8 pt-8 text-center transition-transform duration-500 ease-editorial group-hover:-translate-y-2"
-      >
-        <div className="mx-auto w-[150px] shadow-[0_14px_30px_rgba(0,0,0,0.6)] ring-1 ring-gold/50">
-          <BookCover book={book} sizes="150px" />
+      <Link href={`/books/${book.slug}`} className="block text-center">
+        <div className="mx-auto w-[160px] border border-gold/40 shadow-[0_18px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-editorial group-hover:-translate-y-2 group-hover:scale-[1.03] group-hover:border-gold-bright group-hover:shadow-[0_26px_55px_rgba(0,0,0,0.65),0_0_34px_rgba(184,154,98,0.2)]">
+          <BookCover book={book} sizes="160px" />
         </div>
-        <p className="mt-6 font-display text-[11px] uppercase tracking-[0.3em] text-turquoise">
-          {genreLabel(book.genre)}
-        </p>
-        <h3 className="gold-text mt-3 font-deco text-xl font-bold leading-snug">
-          {book.title}
-        </h3>
-        <p className="mt-3 line-clamp-3 text-[16px] italic leading-relaxed text-ivory/80">
-          {book.description}
-        </p>
-        <span className="mt-5 inline-block font-display text-[11px] uppercase tracking-[0.3em] text-gold-bright/85">
-          Explore &rarr;
-        </span>
+        <p className="label mt-7 text-glow">{genreLabel(book.genre)}</p>
+        <h3 className="heading mt-3 text-2xl leading-snug">{book.title}</h3>
+        <span className="nav-link mt-4 inline-block">Discover</span>
       </Link>
     </motion.div>
   );

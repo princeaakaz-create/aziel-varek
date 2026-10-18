@@ -20,6 +20,7 @@ export default function SmoothScrollProvider({ children }: Props) {
     }
 
     let lenis: any;
+    let onClick: ((e: MouseEvent) => void) | null = null;
     let cancelled = false;
 
     (async () => {
@@ -42,6 +43,22 @@ export default function SmoothScrollProvider({ children }: Props) {
           window.dispatchEvent(new Event('scroll'));
         });
 
+        (window as any).__lenis = lenis;
+
+        // Menu links: glide to the section (plain jumps fight the smooth scroll)
+        onClick = (e: MouseEvent) => {
+          const a = (e.target as HTMLElement | null)?.closest?.('a');
+          if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+          const url = new URL(a.href, window.location.href);
+          if (!url.hash || url.pathname !== window.location.pathname) return;
+          const target = document.querySelector(url.hash);
+          if (!target) return;
+          e.preventDefault();
+          lenis.scrollTo(target as HTMLElement, { duration: 1.8 });
+          history.replaceState(null, '', url.hash);
+        };
+        document.addEventListener('click', onClick);
+
         gsap.ticker.add((time: number) => {
           lenis.raf(time * 1000);
         });
@@ -53,6 +70,7 @@ export default function SmoothScrollProvider({ children }: Props) {
 
     return () => {
       cancelled = true;
+      if (onClick) document.removeEventListener('click', onClick);
       if (lenis) lenis.destroy();
     };
   }, []);

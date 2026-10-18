@@ -29,7 +29,7 @@ export default function BookGrid() {
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeading
           eyebrow="The Library"
-          title="Books"
+          title="The Books"
           sub="Stories in different worlds, genres and places."
         />
 
@@ -40,7 +40,7 @@ export default function BookGrid() {
         <motion.div
           layout
           className="grid justify-center gap-x-10 gap-y-14"
-          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 280px))' }}
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 240px))' }}
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((book) => (

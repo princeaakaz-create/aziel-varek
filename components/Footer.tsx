@@ -2,19 +2,19 @@ import { site } from '@/data/site';
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-b from-transparent to-black/80 py-20">
+    <footer className="relative bg-gradient-to-b from-transparent to-charcoal/90 py-20">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="flex flex-col items-center gap-8 text-center">
           <div>
-            <p className="gold-text font-deco text-2xl font-bold">{site.name}</p>
-            <p className="mt-1 text-[16px] italic text-ivory/70">{site.tagline}</p>
+            <p className="heading text-2xl uppercase tracking-[0.18em]">{site.name}</p>
+            <p className="mt-1 text-[18px] italic text-ivory/70">{site.tagline}</p>
           </div>
 
           <nav aria-label="Footer">
             <ul className="flex flex-wrap justify-center gap-x-7 gap-y-2">
               {site.nav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-[16px] italic text-ivory/70 transition-colors hover:text-gold">
+                  <a href={`/${item.href}`} className="nav-link">
                     {item.label}
                   </a>
                 </li>
@@ -24,7 +24,7 @@ export default function Footer() {
 
           <div className="flex gap-6">
             {site.social.map((s) => (
-              <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="text-[16px] italic text-ivory/70 transition-colors hover:text-gold">
+              <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="nav-link">
                 {s.label}
               </a>
             ))}

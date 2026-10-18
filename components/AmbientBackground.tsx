@@ -8,14 +8,19 @@ const SCENES = {
   library: '/images/scenes/scene-library.jpg'
 };
 
+const clamp = (v: number) => Math.min(1, Math.max(0, v));
+const smooth = (v: number) => {
+  const c = clamp(v);
+  return c * c * (3 - 2 * c);
+};
+
 // how far (0..1) an element's top edge has travelled between two viewport heights
 function progress(id: string, from: number, to: number) {
   const el = document.getElementById(id);
   if (!el) return 0;
   const vh = window.innerHeight;
   const top = el.getBoundingClientRect().top;
-  const p = (from * vh - top) / ((from - to) * vh);
-  return Math.min(1, Math.max(0, p));
+  return clamp((from * vh - top) / ((from - to) * vh));
 }
 
 export default function AmbientBackground() {
@@ -25,28 +30,42 @@ export default function AmbientBackground() {
   const libraryRef = useRef<HTMLDivElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
 
-  // Scroll: archway zooms + fades into bridge, bridge -> library, library -> bridge
+  /*
+   * Scroll-driven journey (fully reversible, nothing is "played" — every frame is
+   * computed from the scroll position):
+   *   hero  -> worlds : the camera pushes through the archway into the kingdom
+   *   worlds-> books  : kingdom crossfades into the library
+   *   books -> about  : library eases back out to the kingdom
+   */
   useEffect(() => {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const a = progress('about', 0.95, 0.35); // archway -> bridge
-      const b = progress('worlds', 0.95, 0.35); // bridge -> library
-      const c = progress('journal', 0.95, 0.35); // library -> bridge
+      const rawA = progress('worlds', 1.0, 0.1); // gate -> kingdom
+      const b = smooth(progress('books', 0.95, 0.35)); // kingdom -> library
+      const c = smooth(progress('about', 0.95, 0.35)); // library -> kingdom
+      const a = smooth(rawA);
 
       const arch = archRef.current;
       const bridge = bridgeRef.current;
       const library = libraryRef.current;
       if (!arch || !bridge || !library) return;
 
-      arch.style.opacity = String(1 - a);
-      arch.style.transform = `scale(${1 + a * 0.45})`;
+      // push in towards the gate, then dissolve while passing through
+      arch.style.transform = `scale(${1 + Math.pow(a, 1.7) * 2.1})`;
+      arch.style.opacity = String(1 - smooth((a - 0.45) / 0.5));
 
-      bridge.style.opacity = String(Math.min(1, a * (1 - b) + c));
-      bridge.style.transform = `scale(${1.25 - a * 0.25})`;
+      // the kingdom rushes up from behind the gate
+      const bridgeIn = smooth((a - 0.4) / 0.6);
+      bridge.style.opacity = String(Math.min(1, bridgeIn * (1 - b) + c));
+      bridge.style.transform = `scale(${1.5 - bridgeIn * 0.5})`;
 
       library.style.opacity = String(b * (1 - c));
-      library.style.transform = `scale(${1.15 - b * 0.15})`;
+      library.style.transform = `scale(${1.12 - b * 0.12})`;
+
+      // hero copy drifts and fades as you move forward
+      const root = document.documentElement;
+      root.style.setProperty('--hero-p', String(clamp(rawA * 1.6)));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -54,7 +73,6 @@ export default function AmbientBackground() {
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
-    // layout shifts after fonts/images load
     const t = setTimeout(update, 800);
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -64,15 +82,15 @@ export default function AmbientBackground() {
     };
   }, []);
 
-  // Pointer parallax (desktop): the whole scene drifts opposite the cursor
+  // Gentle pointer parallax (desktop only)
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     if (reduce || coarse) return;
     let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
     const onMove = (e: MouseEvent) => {
-      tx = (e.clientX / window.innerWidth - 0.5) * -26;
-      ty = (e.clientY / window.innerHeight - 0.5) * -16;
+      tx = (e.clientX / window.innerWidth - 0.5) * -18;
+      ty = (e.clientY / window.innerHeight - 0.5) * -10;
     };
     const loop = () => {
       cx += (tx - cx) * 0.05;
@@ -90,7 +108,7 @@ export default function AmbientBackground() {
     };
   }, []);
 
-  // Fireflies / golden motes
+  // Very small, slow golden motes
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canvas = canvasRef.current;
@@ -100,7 +118,8 @@ export default function AmbientBackground() {
 
     let w = window.innerWidth;
     let h = window.innerHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const small = w < 768;
+    const dpr = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2);
     const size = () => {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -112,18 +131,18 @@ export default function AmbientBackground() {
     };
     size();
 
-    const count = w < 700 ? 34 : 70;
+    const count = small ? 16 : 34;
     const motes = Array.from({ length: count }).map(() => {
-      const depth = Math.random(); // 0 far, 1 near
+      const depth = Math.random();
       return {
         x: Math.random() * w,
         y: Math.random() * h,
-        r: 0.8 + depth * 2.6,
-        vy: -(0.08 + depth * 0.45),
-        vx: (Math.random() - 0.5) * 0.25,
+        r: 0.7 + depth * 1.6,
+        vy: -(0.05 + depth * 0.22),
+        vx: (Math.random() - 0.5) * 0.15,
         phase: Math.random() * Math.PI * 2,
-        pulse: 0.6 + Math.random() * 1.4,
-        a: 0.35 + depth * 0.55
+        pulse: 0.5 + Math.random() * 1.0,
+        a: 0.3 + depth * 0.4
       };
     });
 
@@ -131,16 +150,16 @@ export default function AmbientBackground() {
     const draw = (t: number) => {
       g.clearRect(0, 0, w, h);
       for (const m of motes) {
-        const tw = 0.5 + 0.5 * Math.sin(t / 1000 * m.pulse + m.phase);
-        const x = m.x + Math.sin(t / 2400 + m.phase) * 14 * m.r * 0.4;
-        const alpha = m.a * (0.35 + 0.65 * tw);
-        const grad = g.createRadialGradient(x, m.y, 0, x, m.y, m.r * 6);
-        grad.addColorStop(0, `rgba(255, 235, 170, ${alpha})`);
-        grad.addColorStop(0.3, `rgba(240, 200, 120, ${alpha * 0.45})`);
-        grad.addColorStop(1, 'rgba(240, 200, 120, 0)');
+        const tw = 0.5 + 0.5 * Math.sin((t / 1000) * m.pulse + m.phase);
+        const x = m.x + Math.sin(t / 3000 + m.phase) * 10;
+        const alpha = m.a * (0.3 + 0.7 * tw);
+        const grad = g.createRadialGradient(x, m.y, 0, x, m.y, m.r * 5);
+        grad.addColorStop(0, `rgba(255, 236, 180, ${alpha})`);
+        grad.addColorStop(0.35, `rgba(240, 205, 130, ${alpha * 0.35})`);
+        grad.addColorStop(1, 'rgba(240, 205, 130, 0)');
         g.fillStyle = grad;
         g.beginPath();
-        g.arc(x, m.y, m.r * 6, 0, Math.PI * 2);
+        g.arc(x, m.y, m.r * 5, 0, Math.PI * 2);
         g.fill();
         m.y += m.vy;
         m.x += m.vx;
@@ -164,34 +183,21 @@ export default function AmbientBackground() {
   return (
     <div className="ambient" aria-hidden="true">
       <div ref={parallaxRef} className="ambient-parallax">
-        {/* the three scenes; each has its own slow panoramic drift */}
         <div ref={libraryRef} className="scene" style={{ opacity: 0 }}>
-          <div
-            className="scene-img drift-b"
-            style={{ backgroundImage: `url('${SCENES.library}')` }}
-          />
+          <div className="scene-img drift-b" style={{ backgroundImage: `url('${SCENES.library}')` }} />
         </div>
         <div ref={bridgeRef} className="scene" style={{ opacity: 0 }}>
-          <div
-            className="scene-img drift-a"
-            style={{ backgroundImage: `url('${SCENES.bridge}')` }}
-          />
+          <div className="scene-img drift-a" style={{ backgroundImage: `url('${SCENES.bridge}')` }} />
         </div>
-        <div ref={archRef} className="scene">
-          <div
-            className="scene-img drift-c"
-            style={{ backgroundImage: `url('${SCENES.archway}')` }}
-          />
+        <div ref={archRef} className="scene arch-scene">
+          <div className="scene-img drift-c" style={{ backgroundImage: `url('${SCENES.archway}')` }} />
         </div>
       </div>
 
-      {/* depth + atmosphere */}
       <div className="rays" />
       <div className="mist mist-1" />
-      <div className="mist mist-2" />
       <div className="lantern lantern-a" />
       <div className="lantern lantern-b" />
-      <div className="lantern lantern-c" />
       <canvas ref={canvasRef} className="motes" />
       <div className="tint" />
       <div className="vig" />
@@ -202,112 +208,92 @@ export default function AmbientBackground() {
           inset: 0;
           z-index: 0;
           overflow: hidden;
-          background: #0a120f;
+          background: #0a100e;
           pointer-events: none;
         }
         .ambient-parallax {
           position: absolute;
-          inset: -4%;
+          inset: -3%;
           will-change: transform;
         }
         .scene {
           position: absolute;
           inset: 0;
           will-change: opacity, transform;
-          transform-origin: 50% 55%;
+          transform-origin: 50% 50%;
+        }
+        .arch-scene {
+          transform-origin: 50% 40%;
         }
         .scene-img {
           position: absolute;
-          inset: 0 -9%;
+          inset: 0 -6%;
           background-size: cover;
           background-position: center;
           will-change: transform;
         }
-        .drift-a {
-          animation: driftA 46s ease-in-out infinite alternate;
-        }
-        .drift-b {
-          animation: driftB 52s ease-in-out infinite alternate;
-        }
-        .drift-c {
-          animation: driftC 40s ease-in-out infinite alternate;
-        }
+        .drift-a { animation: driftA 60s ease-in-out infinite alternate; }
+        .drift-b { animation: driftB 70s ease-in-out infinite alternate; }
+        .drift-c { animation: driftC 55s ease-in-out infinite alternate; }
         @keyframes driftA {
-          from { transform: translate3d(-3.5%, 0, 0) scale(1.02); }
-          to   { transform: translate3d(3.5%, -1%, 0) scale(1.1); }
+          from { transform: translate3d(-2.5%, 0, 0) scale(1.02); }
+          to   { transform: translate3d(2.5%, -0.5%, 0) scale(1.07); }
         }
         @keyframes driftB {
-          from { transform: translate3d(3.5%, -1%, 0) scale(1.1); }
-          to   { transform: translate3d(-3.5%, 0.5%, 0) scale(1.02); }
+          from { transform: translate3d(2.5%, -0.5%, 0) scale(1.07); }
+          to   { transform: translate3d(-2.5%, 0.3%, 0) scale(1.02); }
         }
         @keyframes driftC {
-          from { transform: translate3d(0, 0.5%, 0) scale(1.0); }
-          to   { transform: translate3d(0, -1%, 0) scale(1.12); }
+          from { transform: translate3d(0, 0.3%, 0) scale(1); }
+          to   { transform: translate3d(0, -0.6%, 0) scale(1.05); }
         }
 
-        /* soft god-rays that breathe */
         .rays {
           position: absolute;
           inset: -20% -10%;
           background:
-            linear-gradient(105deg, transparent 38%, rgba(255, 236, 180, 0.12) 44%, transparent 50%),
-            linear-gradient(112deg, transparent 52%, rgba(255, 236, 180, 0.09) 57%, transparent 63%),
-            linear-gradient(100deg, transparent 20%, rgba(255, 236, 180, 0.07) 25%, transparent 31%);
+            linear-gradient(105deg, transparent 40%, rgba(255, 236, 180, 0.07) 45%, transparent 51%),
+            linear-gradient(112deg, transparent 54%, rgba(255, 236, 180, 0.05) 58%, transparent 63%);
           mix-blend-mode: screen;
-          animation: raysSway 14s ease-in-out infinite alternate;
+          animation: raysSway 18s ease-in-out infinite alternate;
         }
         @keyframes raysSway {
-          from { transform: translateX(-3%) rotate(-1deg); opacity: 0.55; }
-          to   { transform: translateX(3%) rotate(1deg); opacity: 1; }
+          from { transform: translateX(-2%) rotate(-1deg); opacity: 0.5; }
+          to   { transform: translateX(2%) rotate(1deg); opacity: 1; }
         }
 
         .mist {
           position: absolute;
           left: -50%;
           width: 200%;
-          height: 45%;
-          filter: blur(22px);
+          height: 40%;
+          bottom: -4%;
+          filter: blur(24px);
           mix-blend-mode: screen;
-        }
-        .mist-1 {
-          bottom: -5%;
-          background: radial-gradient(ellipse at 30% 60%, rgba(200, 225, 215, 0.22), transparent 55%),
-            radial-gradient(ellipse at 75% 50%, rgba(200, 225, 215, 0.16), transparent 50%);
-          animation: mistA 60s linear infinite;
-        }
-        .mist-2 {
-          bottom: 12%;
-          opacity: 0.7;
-          background: radial-gradient(ellipse at 20% 50%, rgba(220, 235, 225, 0.14), transparent 50%),
-            radial-gradient(ellipse at 65% 60%, rgba(220, 235, 225, 0.12), transparent 55%);
-          animation: mistB 85s linear infinite;
+          background: radial-gradient(ellipse at 30% 60%, rgba(200, 225, 215, 0.14), transparent 55%),
+            radial-gradient(ellipse at 75% 50%, rgba(200, 225, 215, 0.1), transparent 50%);
+          animation: mistA 90s linear infinite;
         }
         @keyframes mistA {
           from { transform: translateX(0); }
           to   { transform: translateX(25%); }
         }
-        @keyframes mistB {
-          from { transform: translateX(25%); }
-          to   { transform: translateX(0); }
-        }
 
         .lantern {
           position: absolute;
-          width: 260px;
-          height: 260px;
+          width: 220px;
+          height: 220px;
           border-radius: 9999px;
-          background: radial-gradient(circle, rgba(255, 214, 140, 0.34) 0%, rgba(255, 214, 140, 0) 68%);
+          background: radial-gradient(circle, rgba(255, 214, 140, 0.22) 0%, rgba(255, 214, 140, 0) 68%);
           mix-blend-mode: screen;
-          animation: flicker 5s ease-in-out infinite;
+          animation: flicker 6s ease-in-out infinite;
         }
-        .lantern-a { top: 18%; left: 8%; }
-        .lantern-b { top: 46%; right: 10%; animation-delay: 1.4s; }
-        .lantern-c { bottom: 12%; left: 44%; animation-delay: 2.7s; }
+        .lantern-a { top: 24%; left: 7%; }
+        .lantern-b { top: 52%; right: 9%; animation-delay: 2s; }
         @keyframes flicker {
           0%, 100% { opacity: 0.5; transform: scale(1); }
-          30% { opacity: 0.9; transform: scale(1.1); }
-          50% { opacity: 0.4; transform: scale(0.95); }
-          70% { opacity: 0.75; transform: scale(1.05); }
+          35% { opacity: 0.85; transform: scale(1.06); }
+          60% { opacity: 0.4; transform: scale(0.97); }
         }
 
         .motes {
@@ -315,16 +301,20 @@ export default function AmbientBackground() {
           inset: 0;
         }
 
-        /* keep it moody + readable: a light teal tint and a vignette */
         .tint {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(8, 20, 18, 0.28), rgba(6, 14, 12, 0.4));
+          background: linear-gradient(180deg, rgba(13, 31, 26, 0.3), rgba(10, 16, 14, 0.42));
         }
         .vig {
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at center, transparent 40%, rgba(3, 8, 6, 0.65) 100%);
+          background: radial-gradient(ellipse at center, transparent 42%, rgba(4, 8, 6, 0.62) 100%);
+        }
+
+        @media (max-width: 768px) {
+          .mist, .lantern { display: none; }
+          .rays { opacity: 0.6; }
         }
 
         @media (prefers-reduced-motion: reduce) {

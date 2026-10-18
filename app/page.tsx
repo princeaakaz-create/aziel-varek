@@ -1,25 +1,23 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
 import WorldsSection from '@/components/WorldsSection';
 import BookGrid from '@/components/BookGrid';
 import FeaturedBook from '@/components/FeaturedBook';
-import JournalSection from '@/components/JournalSection';
-import Newsletter from '@/components/Newsletter';
+import About from '@/components/About';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import ScrollProgress from '@/components/ScrollProgress';
 
 export default function HomePage() {
   return (
     <main>
+      <ScrollProgress />
       <Navbar />
       <Hero />
-      <About />
       <WorldsSection />
       <BookGrid />
       <FeaturedBook />
-      <JournalSection />
-      <Newsletter />
+      <About />
       <Contact />
       <Footer />
     </main>
