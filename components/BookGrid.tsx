@@ -30,7 +30,7 @@ export default function BookGrid() {
         <SectionHeading
           eyebrow="Bookshelf"
           title="The Books"
-          sub="Everything I\u2019ve published so far."
+          sub="Everything I’ve published so far."
         />
 
         <div className="mb-16 mt-12">
@@ -51,7 +51,7 @@ export default function BookGrid() {
 
         {filtered.length === 0 && (
           <p className="mt-6 text-center text-xl italic text-ivory/80 text-glow">
-            Nothing on this shelf yet. I\u2019m still writing it.
+            Nothing on this shelf yet. I’m still writing it.
           </p>
         )}
       </div>

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { site } from '@/data/site';
-import { getFeaturedBook } from '@/data/books';
 
 export default function Hero() {
   const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -91,8 +90,8 @@ export default function Hero() {
           {site.tagline}
         </p>
 
-        <a href={`/books/${getFeaturedBook().slug}#chapter-one`} className="btn mt-9">
-          Read Chapter One
+        <a href="#about" className="btn mt-9">
+          About the Author
         </a>
       </div>
 
