@@ -19,7 +19,8 @@ module.exports = {
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],
-        deco: ['var(--font-display)', 'Georgia', 'serif'],
+        deco: ['var(--font-heading)', 'Georgia', 'serif'],
+        heading: ['var(--font-heading)', 'Georgia', 'serif'],
         body: ['var(--font-body)', 'Georgia', 'serif'],
         label: ['var(--font-label)', 'Helvetica', 'Arial', 'sans-serif']
       },

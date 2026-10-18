@@ -21,8 +21,8 @@ export default function BookCard({ book }: { book: Book }) {
           <BookCover book={book} sizes="160px" />
         </div>
         <p className="label mt-7 text-glow">{genreLabel(book.genre)}</p>
-        <h3 className="heading mt-3 text-2xl leading-snug">{book.title}</h3>
-        <span className="nav-link mt-4 inline-block">Discover</span>
+        <h3 className="heading mt-3 text-xl leading-snug">{book.title}</h3>
+        <span className="nav-link mt-4 inline-block">Read more</span>
       </Link>
     </motion.div>
   );

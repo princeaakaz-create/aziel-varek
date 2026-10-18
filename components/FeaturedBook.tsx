@@ -56,15 +56,15 @@ export default function FeaturedBook() {
             </div>
 
             <div className="text-center md:text-left">
-              <p className="label">Featured &middot; {genreLabel(book.genre)}</p>
-              <h2 className="heading mt-4 text-4xl leading-snug md:text-5xl">{book.title}</h2>
+              <p className="label">Latest release &middot; {genreLabel(book.genre)}</p>
+              <h2 className="heading mt-4 text-3xl leading-snug md:text-4xl">{book.title}</h2>
               <Ornament className="!mx-0 mt-5" />
               <p className="mt-6 max-w-prose2 text-[21px] italic leading-relaxed text-ivory/90">
                 {book.description}
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4 md:justify-start">
-                <Link href={`/books/${book.slug}#excerpt`} className="btn">
-                  Read Sample
+                <Link href={`/books/${book.slug}#chapter-one`} className="btn">
+                  Read Chapter One
                 </Link>
                 <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn btn-solid">
                   Buy on Amazon

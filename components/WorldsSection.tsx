@@ -50,9 +50,9 @@ export default function WorldsSection() {
     <section id="worlds" ref={sectionRef} className="relative py-28 md:py-40">
       <div className="mx-auto max-w-5xl px-6 md:px-10">
         <SectionHeading
-          eyebrow="Step into a new genre"
+          eyebrow="Where to start"
           title="Explore the Worlds"
-          sub="Each genre is its own doorway in the same house. Choose one and find your next story."
+          sub="I write in two worlds: the aching, near-future kind of science fiction, and the old-magic hush of fantasy and fairytale. Pick a door."
         />
 
         <div className="mt-20 grid grid-cols-1 justify-items-center gap-14 sm:grid-cols-2 md:gap-20">
@@ -73,7 +73,7 @@ export default function WorldsSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-charcoal/10" />
                   <div className="absolute inset-x-0 bottom-0 px-5 pb-8 text-center">
-                    <h3 className="heading text-2xl uppercase tracking-[0.12em]">{genre.label}</h3>
+                    <h3 className="heading text-xl uppercase tracking-[0.08em]">{genre.label}</h3>
                     <span className="mx-auto mt-3 block h-px w-10 bg-gold/70 transition-all duration-500 group-hover:w-20" />
                     <p className="mt-3 text-[18px] italic leading-snug text-ivory/85">
                       {genre.description}

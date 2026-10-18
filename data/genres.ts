@@ -10,12 +10,12 @@ export const genres: Genre[] = [
   {
     id: 'science-fiction',
     label: 'Science Fiction',
-    description: 'Time, memory, and the questions that follow us into the future.'
+    description: 'Time loops, lost memories, and a love that outlasts the reset.'
   },
   {
     id: 'fantasy',
     label: 'Fantasy & Fairytale',
-    description: 'Old magic, hidden doors, and worlds that glow just out of sight.'
+    description: 'Hidden doors, old magic, and places that only exist while you\u2019re reading.'
   }
 ];
 

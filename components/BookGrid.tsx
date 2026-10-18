@@ -28,9 +28,9 @@ export default function BookGrid() {
     <section id="books" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeading
-          eyebrow="The Library"
+          eyebrow="Bookshelf"
           title="The Books"
-          sub="Stories in different worlds, genres and places."
+          sub="Everything I\u2019ve published so far."
         />
 
         <div className="mb-16 mt-12">
@@ -51,7 +51,7 @@ export default function BookGrid() {
 
         {filtered.length === 0 && (
           <p className="mt-6 text-center text-xl italic text-ivory/80 text-glow">
-            No tales on this shelf yet.
+            Nothing on this shelf yet. I\u2019m still writing it.
           </p>
         )}
       </div>

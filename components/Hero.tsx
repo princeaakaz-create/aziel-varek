@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { site } from '@/data/site';
+import { getFeaturedBook } from '@/data/books';
 
 export default function Hero() {
   const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -71,13 +72,13 @@ export default function Hero() {
           ref={roleRef}
           className="label mb-5 text-glow"
         >
-          Author
+          Fiction Author
         </p>
 
         <div className="reveal-mask">
           <h1
             ref={nameRef}
-            className="heading px-2 pb-2 text-[10vw] font-light uppercase leading-[1.05] tracking-[0.08em] md:text-[5.5rem]"
+            className="heading px-2 pb-2 text-[8.5vw] uppercase leading-[1.1] tracking-[0.08em] md:text-[4.8rem]"
           >
             {site.name}
           </h1>
@@ -90,8 +91,8 @@ export default function Hero() {
           {site.tagline}
         </p>
 
-        <a href="#worlds" className="btn mt-9">
-          Explore Worlds
+        <a href={`/books/${getFeaturedBook().slug}#chapter-one`} className="btn mt-9">
+          Read Chapter One
         </a>
       </div>
 

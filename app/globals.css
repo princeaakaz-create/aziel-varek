@@ -46,9 +46,9 @@ body {
 
 /* ---------- typography ---------- */
 .heading {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 300;
-  letter-spacing: 0.02em;
+  font-family: var(--font-heading), var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: var(--ivory);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }

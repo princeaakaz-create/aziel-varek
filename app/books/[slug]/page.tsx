@@ -41,7 +41,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
 
             <div className="mt-8 flex flex-col gap-4">
               <Link href={readerHref} className="btn !px-4">
-                Read Sample
+                Read Chapter One
               </Link>
               <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn btn-solid !px-4">
                 Buy on Amazon
@@ -54,7 +54,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
               {genreLabel(book.genre)}
               {book.publishedYear ? ` \u00b7 ${book.publishedYear}` : ''}
             </p>
-            <h1 className="heading mt-4 text-4xl leading-tight md:text-6xl">
+            <h1 className="heading mt-4 text-3xl leading-tight md:text-5xl">
               {book.title}
             </h1>
             <Ornament className="!mx-0 mt-5" />
@@ -63,14 +63,14 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
             </p>
 
             <div className="mt-12">
-              <h2 className="heading text-3xl">About the story</h2>
+              <h2 className="heading text-2xl">About the book</h2>
               <p className="mt-4 max-w-prose2 text-[20px] leading-relaxed text-ivory/85">
                 {book.aboutTheStory}
               </p>
             </div>
 
             <div id="excerpt" className="mt-14 scroll-mt-32">
-              <h2 className="heading text-3xl">Excerpt</h2>
+              <h2 className="heading text-2xl">Excerpt</h2>
               <blockquote className="mt-4 max-w-prose2 border-l border-gold/60 pl-5 text-2xl italic leading-relaxed text-ivory/90">
                 &ldquo;{book.excerpt}&rdquo;
               </blockquote>
@@ -78,7 +78,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
 
             {chapterOne && (
               <div id="chapter-one" className="mt-16 scroll-mt-32">
-                <h2 className="heading text-3xl">Chapter One</h2>
+                <h2 className="heading text-2xl">Chapter One</h2>
                 <div className="mt-6 max-w-prose2 space-y-5">
                   {chapterOne.map((para, i) => {
                     const isHeading = i === 0 || para.startsWith('Part ');
@@ -98,7 +98,7 @@ export default function BookDetailPage({ params }: { params: { slug: string } })
 
             <div className="mt-20">
               <Link href="/#books" className="btn">
-                &larr; All Books
+                &larr; Back to the books
               </Link>
             </div>
           </div>

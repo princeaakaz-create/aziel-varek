@@ -37,7 +37,7 @@ export default function About() {
       <div className="mx-auto max-w-3xl px-5 md:px-10">
         <div ref={textRef} className="panel px-7 py-12 text-center md:px-16 md:py-16">
           <p className="label">The Author</p>
-          <h2 className="heading mt-4 text-4xl md:text-5xl">{site.about.heading}</h2>
+          <h2 className="heading mt-4 text-3xl md:text-4xl">{site.about.heading}</h2>
           <Ornament className="mt-6" />
           <p className="mt-7 text-[26px] italic leading-snug text-ivory md:text-[30px]">
             {site.intro.heading}
