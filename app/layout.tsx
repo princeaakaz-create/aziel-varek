@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Cinzel, Montserrat } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 import AmbientBackground from '@/components/AmbientBackground';
+import { Analytics } from '@vercel/analytics/next';
 
 const display = Cormorant_Garamond({
   subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({
         <div className="relative z-10">
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </div>
+        <Analytics />
       </body>
     </html>
   );
