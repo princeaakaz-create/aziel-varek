@@ -28,6 +28,7 @@ const label = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://aziel-varek.vercel.app'),
   title: 'Aziel Varek — Author',
   description:
     'Official site of fiction author Aziel Varek. Science fiction, fantasy and fairytale. Read a sample and find the books.'
