@@ -7,8 +7,8 @@ import SectionHeading from './SectionHeading';
 
 // Which part of the artwork each doorway looks into
 const ART: Record<string, { img: string; pos: string }> = {
-  'science-fiction': { img: '/images/scenes/scene-bridge.jpg', pos: '62% 40%' },
-  fantasy: { img: '/images/scenes/scene-archway.jpg', pos: '52% 38%' }
+  'science-fiction': { img: '/images/scene-bridge.jpg', pos: '62% 40%' },
+  fantasy: { img: '/images/ambient-hero.jpg', pos: '52% 38%' }
 };
 
 export default function WorldsSection() {

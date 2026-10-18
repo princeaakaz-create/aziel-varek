@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 
 const SCENES = {
-  archway: '/images/scenes/scene-archway.jpg',
-  bridge: '/images/scenes/scene-bridge.jpg',
-  library: '/images/scenes/scene-library.jpg'
+  archway: '/images/ambient-hero.jpg',
+  bridge: '/images/scene-bridge.jpg',
+  library: '/images/ambient-about.jpg'
 };
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
