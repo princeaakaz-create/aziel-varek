@@ -63,6 +63,7 @@ export default function WorldsSection() {
                 key={genre.id}
                 data-door
                 href={`/?genre=${genre.id}#books`}
+                onClick={() => window.dispatchEvent(new CustomEvent('select-genre', { detail: genre.id }))}
                 className="door group relative block w-full max-w-[300px]"
                 aria-label={`${genre.label}: open this world`}
               >

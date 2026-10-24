@@ -17,6 +17,13 @@ export default function BookGrid() {
     if (genre && genres.some((g) => g.id === genre)) {
       setActive(genre as FilterValue);
     }
+    // Clicking a world card on the same page
+    const onSelect = (e: Event) => {
+      const id = (e as CustomEvent).detail;
+      if (genres.some((g) => g.id === id)) setActive(id as FilterValue);
+    };
+    window.addEventListener('select-genre', onSelect);
+    return () => window.removeEventListener('select-genre', onSelect);
   }, []);
 
   const filtered = useMemo(
@@ -50,9 +57,12 @@ export default function BookGrid() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <p className="mt-6 text-center text-xl italic text-ivory/80 text-glow">
-            Nothing on this shelf yet. I’m still writing it.
-          </p>
+          <div className="mt-6 text-center text-glow">
+            <p className="heading text-lg uppercase tracking-[0.12em] text-gold-light">Coming soon</p>
+            <p className="mt-3 text-xl italic text-ivory/80">
+              This shelf is still being written. Stay tuned, a new story is on its way.
+            </p>
+          </div>
         )}
       </div>
     </section>
